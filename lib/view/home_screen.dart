@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   FilterList? selectedMenu;
 
   final format = DateFormat('MMMM dd, yyyy');
-  String name = "the-hindu";
+  String name = "google-news-in";
 
 
   @override
@@ -232,67 +232,80 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           DateTime dateTime = DateTime.parse(snapshot.data!.articles![index].publishedAt.toString());
 
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                      imageUrl: snapshot.data!.articles![index].urlToImage.toString(),
-                                      fit: BoxFit.cover,
-                                      height: height * .18,
-                                      width: width * .3,
-                                      placeholder: (context, url)=> Container(child: Center(
-                                        child: SpinKitCircle(
-                                          size: 50,
-                                          color: Colors.blue,
+                          return InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                    NewsDetailScreen(
+                                        newImage: snapshot.data!.articles![index].urlToImage.toString(),
+                                        newsTitle: snapshot.data!.articles![index].title.toString(),
+                                        newsDate: snapshot.data!.articles![index].publishedAt.toString(),
+                                        author: snapshot.data!.articles![index].author.toString(),
+                                        description: snapshot.data!.articles![index].description.toString(),
+                                        content: snapshot.data!.articles![index].content.toString(),
+                                        source: snapshot.data!.articles![index].source!.name.toString())));
+                              },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                        imageUrl: snapshot.data!.articles![index].urlToImage.toString(),
+                                        fit: BoxFit.cover,
+                                        height: height * .18,
+                                        width: width * .3,
+                                        placeholder: (context, url)=> Container(child: Center(
+                                          child: SpinKitCircle(
+                                            size: 50,
+                                            color: Colors.blue,
+                                          ),
                                         ),
-                                      ),
-                                      ),
-                                      errorWidget: (context, url, error)=> Icon(Icons.error_outline, color: Colors.red,)
+                                        ),
+                                        errorWidget: (context, url, error)=> Icon(Icons.error_outline, color: Colors.red,)
+                                    ),
                                   ),
-                                ),
-                                Expanded(child: Container(
-                                  height: height * .18,
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Column(
-                                    children: [
-                                      Text(snapshot.data!.articles![index].title.toString()
-                                        ,maxLines:3,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 14,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w700
+                                  Expanded(child: Container(
+                                    height: height * .18,
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Column(
+                                      children: [
+                                        Text(snapshot.data!.articles![index].title.toString()
+                                          ,maxLines:3,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w700
+                                          ),
                                         ),
-                                      ),
-                                      Spacer(),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Text(snapshot.data!.articles![index].source!.name.toString(),
+                                        Spacer(),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Text(snapshot.data!.articles![index].source!.name.toString(),
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    color: Colors.black54,
+                                                    fontWeight: FontWeight.w600
+                                                ),
+                                              ),
+                                            ),
+                                            Text(format.format(dateTime),
                                               style: GoogleFonts.poppins(
                                                   fontSize: 14,
                                                   color: Colors.black54,
-                                                  fontWeight: FontWeight.w600
+                                                  fontWeight: FontWeight.w500
                                               ),
                                             ),
-                                          ),
-                                          Text(format.format(dateTime),
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                color: Colors.black54,
-                                                fontWeight: FontWeight.w500
-                                            ),
-                                          ),
-                                        ],
-                                      )
+                                          ],
+                                        )
 
-                                    ],
-                                  ),
-                                ))
-                              ],
+                                      ],
+                                    ),
+                                  ))
+                                ],
+                              ),
                             ),
                           );
                         });
@@ -306,6 +319,6 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 const spinKit2 = SpinKitFadingCircle(
-  color: Colors.amber,
+  color: Colors.blue,
   size: 50,
 );
