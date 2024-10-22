@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 class NewsDetailScreen extends StatefulWidget {
 
   final String newImage, newsTitle, newsDate, author, description, content, source;
+
   const NewsDetailScreen({super.key,
     required this.newImage,
     required this.newsTitle,

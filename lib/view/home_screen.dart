@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:newzzindia/model/news_chanel_headlines_model.dart';
 import 'package:newzzindia/view/category_screen.dart';
 import 'package:newzzindia/view/news_detail_screen.dart';
-
 import '../model/categories_news_model.dart';
 import '../view_model/news_view_model.dart';
 
@@ -26,6 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final format = DateFormat('MMMM dd, yyyy');
   String name = "google-news-in";
+
+  int newsIndex = 0;
+
+  void onIconTaped(int index) {
+    setState(() {
+      newsIndex = index;
+    });
+  }
 
 
   @override
@@ -314,6 +321,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+
+            BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: newsIndex,
+        selectedItemColor: Colors.red,
+        onTap: onIconTaped,
+      ),
+
     );
   }
 }
